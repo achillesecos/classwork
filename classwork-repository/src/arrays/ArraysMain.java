@@ -7,7 +7,82 @@ public class ArraysMain {
 	private String[] suits;
 	private String[] values; 
 	
+	public ArraysMain() {
+		tuesdayMethods();
+	}
+	
+	private void tuesdayMethods() {
+		int[] orderTest = {1,2,3,4,5,6,7,8,9,10};
+		cycleThrough(orderTest, 5);
+		System.out.println(Arrays.toString(frontToBack(orderTest)));
+		
+	}
+	
+	private int logestConsecutiveSequence(int[] arr) {
+		int maxLength = 1;
+		int currentCount = 1;
+		for(int i = 0; i < arr.length; i++) {			
+			while(i + currentCount < arr.length && isConsecutive(arr, i, i + currentCount)) {
+				currentCount ++;
+			}
+			if(currentCount > maxLength) {
+				maxLength = currentCount;
+			}
+			i = i + currentCount -1; //saves time
+			currentCount = 1;
+		}
+		return maxLength;
+	}
+	
+	private boolean isConsecutive(int[] arr, int start, int end) {
+		for(int i = start; i <= end; i++) {
+			if(arr[i] != (arr[i+1] - 1)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private void cycleThrough(int[] orderTest, int z) {
+		for(int i = 0; i < z; i++) {
+			frontToBack(orderTest);
+		}
+		
+	}
+
+	private void frontToBack(int[] arr) {
+		int[] first = arr[0];
+		for(int i = 0; i < arr.length - 1; i++) {
+			arr[i] += arr[i+1];
+		}
+		arr[arr.length-1] = x;
+	}
+
+	private void warmUpMethods() {
+		int[] orderTest = {1,2,3,4,5,6,7,8,9,10};
+		reverseOrder(orderTest);
+		System.out.println(Arrays.toString(orderTest));
+		System.out.println(Arrays.toString(subArray(orderTest,3,4)));
+	}
+	
+	private int[] subArray(int[] arr, int start, int length) {
+		int[] output = new int[length];
+		for(int i = 0; i < length; i++) {
+			output[i] = arr[i + start];
+		}
+		return output;
+	}
+	
+	
+	private void reverseOrder(int[] arr) {
+		for(int i = arr.length/2; i > 0; i--) {
+			swap(arr,i,arr.length-1);
+		}
+	}
+	
 	private int[] testArray;
+	
+	
 	
 	public ArraysMain() {
 		
