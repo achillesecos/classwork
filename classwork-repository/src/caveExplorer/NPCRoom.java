@@ -1,6 +1,6 @@
 package caveExplorer;
 
-public class NPCRoom extends CaveRoom{
+public class NPCRoom extends CaveRoom {
 
 	private NPC npc;
 	
@@ -18,53 +18,72 @@ public class NPCRoom extends CaveRoom{
 	}
 	
 	public void leaveNPC() {
-		this.npc  = null;
+		this.npc = null;
 	}
 	
 	public boolean containsNPC() {
 		return npc != null;
 	}
 	
-	/*
-	 * Everything aboce is a NEW function of a CaveRoom, 
-	 * the method
+	/**
+	 * Everything above is a NEW function of a CaveRoom, 
+	 * the methods below REPLACE original CaveRoom methods
 	 */
-
-	/*
-	 *Override to change description of possible moves.  
-	 */
-	private void printValidMoves() {
-		System.out.println("You can only enter 'w', 'a', 's', or 'd' to move "
-				+ "or you can pres 'e' to interact.");
-	}
 	
+	/**
+	 * Override to change description of possible moves
+	 */
+	public void printValidMoves() {
+		System.out.println("You can only enter 'w', 'a', 's', or 'd' to move "
+				+ "or you can press 'e' to interact.");
+	}
+
+	/**
+	 * override to add more moves
+	 * @return
+	 */
 	public String validMoves() {
 		return "wdsae";
 	}
 
-	private void performAction(int direction) {
+	/**
+	 * override to create response to keys other than wdsa
+	 * @param direction
+	 */
+	public void performAction(int direction) {
 		if(direction == 4) {
 			if(npc != null && npc.isActive()) {
 				npc.interact();
+			}else {
+				CaveExplorer.print("There is nothing to interact with.");
 			}
-			else {
-				CaveExplorer.print("there is nothing interact with");
-			}
-		}
-		else {
+		}else {
 			CaveExplorer.print("That key does nothing");
+		}
+	}
+	
+	public String getContents() {
+		if(containsNPC() && npc.isActive()) {
+			return npc.getSymbol();
+		}else {
+			return super.getContents();
 		}
 	}
 	
 	public String getDescription() {
 		if(containsNPC() && npc.isActive()) {
-			return super.getDescription() + "\n" + npc.getDescription();
-		}
-		else if(containsNPC() && !npc.isActive()) {
-			return super.getDescription() + "\n" + npc.getInactiveDescription();
-		}
-		else {
+			return super.getDescription()+"\n"+npc.getDescription();
+		}else if(containsNPC() && !npc.isActive()){
+			return super.getDescription()+"\n"+npc.getInactiveDescription();
+		}else {
 			return super.getDescription();
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
 }
